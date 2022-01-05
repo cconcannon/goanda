@@ -63,20 +63,14 @@ type BrokerBook struct {
 type InstrumentPricing struct {
 	Time   time.Time `json:"time"`
 	Prices []struct {
-		Type string    `json:"type"`
-		Time time.Time `json:"time"`
-		Bids []struct {
-			Price     float64 `json:"price,string"`
-			Liquidity int     `json:"liquidity"`
-		} `json:"bids"`
-		Asks []struct {
-			Price     float64 `json:"price,string"`
-			Liquidity int     `json:"liquidity"`
-		} `json:"asks"`
-		CloseoutBid    float64 `json:"closeoutBid,string"`
-		CloseoutAsk    float64 `json:"closeoutAsk,string"`
-		Status         string  `json:"status"`
-		Tradeable      bool    `json:"tradeable"`
+		Type           string    `json:"type"`
+		Time           time.Time `json:"time"`
+		Bids           []Bid     `json:"bids"`
+		Asks           []Ask     `json:"asks"`
+		CloseoutBid    float64   `json:"closeoutBid,string"`
+		CloseoutAsk    float64   `json:"closeoutAsk,string"`
+		Status         string    `json:"status"`
+		Tradeable      bool      `json:"tradeable"`
 		UnitsAvailable struct {
 			Default struct {
 				Long  string `json:"long"`

@@ -8,19 +8,21 @@ import (
 )
 
 type ReceivedTrades struct {
-	LastTransactionID string `json:"lastTransactionID"`
-	Trades            []struct {
-		CurrentUnits string    `json:"currentUnits"`
-		Financing    string    `json:"financing"`
-		ID           string    `json:"id"`
-		InitialUnits string    `json:"initialUnits"`
-		Instrument   string    `json:"instrument"`
-		OpenTime     time.Time `json:"openTime"`
-		Price        string    `json:"price"`
-		RealizedPL   string    `json:"realizedPL"`
-		State        string    `json:"state"`
-		UnrealizedPL string    `json:"unrealizedPL"`
-	} `json:"trades"`
+	LastTransactionID string  `json:"lastTransactionID"`
+	Trades            []Trade `json:"trades"`
+}
+
+type Trade struct {
+	CurrentUnits string    `json:"currentUnits"`
+	Financing    string    `json:"financing"`
+	ID           string    `json:"id"`
+	InitialUnits string    `json:"initialUnits"`
+	Instrument   string    `json:"instrument"`
+	OpenTime     time.Time `json:"openTime"`
+	Price        string    `json:"price"`
+	RealizedPL   string    `json:"realizedPL"`
+	State        string    `json:"state"`
+	UnrealizedPL string    `json:"unrealizedPL"`
 }
 
 type ReceivedTrade struct {

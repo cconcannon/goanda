@@ -16,52 +16,35 @@ type TransactionPages struct {
 	To                time.Time `json:"to"`
 }
 
+type TransactionResponse struct {
+	LastTransactionID string      `json:"lastTransactionID"`
+	Transaction       Transaction `json:"transaction"`
+}
+
 type Transaction struct {
-	LastTransactionID string `json:"lastTransactionID"`
-	Transaction       struct {
-		AccountBalance string    `json:"accountBalance"`
-		AccountID      string    `json:"accountID"`
-		BatchID        string    `json:"batchID"`
-		Financing      string    `json:"financing"`
-		ID             string    `json:"id"`
-		Instrument     string    `json:"instrument"`
-		OrderID        string    `json:"orderID"`
-		Pl             string    `json:"pl"`
-		Price          string    `json:"price"`
-		Reason         string    `json:"reason"`
-		Time           time.Time `json:"time"`
-		TradeOpened    struct {
-			TradeID string `json:"tradeID"`
-			Units   string `json:"units"`
-		} `json:"tradeOpened"`
-		Type   string `json:"type"`
-		Units  string `json:"units"`
-		UserID int    `json:"userID"`
-	} `json:"transaction"`
+	AccountBalance string    `json:"accountBalance"`
+	AccountID      string    `json:"accountID"`
+	BatchID        string    `json:"batchID"`
+	Financing      string    `json:"financing"`
+	ID             string    `json:"id"`
+	Instrument     string    `json:"instrument"`
+	OrderID        string    `json:"orderID"`
+	Pl             string    `json:"pl"`
+	Price          string    `json:"price"`
+	Reason         string    `json:"reason"`
+	Time           time.Time `json:"time"`
+	TradeOpened    struct {
+		TradeID string `json:"tradeID"`
+		Units   string `json:"units"`
+	} `json:"tradeOpened"`
+	Type   string `json:"type"`
+	Units  string `json:"units"`
+	UserID int    `json:"userID"`
 }
 
 type Transactions struct {
-	LastTransactionID string `json:"lastTransactionID"`
-	Transactions      []struct {
-		AccountBalance string    `json:"accountBalance"`
-		AccountID      string    `json:"accountID"`
-		BatchID        string    `json:"batchID"`
-		Financing      string    `json:"financing"`
-		ID             string    `json:"id"`
-		Instrument     string    `json:"instrument"`
-		OrderID        string    `json:"orderID"`
-		Pl             string    `json:"pl"`
-		Price          string    `json:"price"`
-		Reason         string    `json:"reason"`
-		Time           time.Time `json:"time"`
-		TradeOpened    struct {
-			TradeID string `json:"tradeID"`
-			Units   string `json:"units"`
-		} `json:"tradeOpened"`
-		Type   string `json:"type"`
-		Units  string `json:"units"`
-		UserID int    `json:"userID"`
-	} `json:"transactions"`
+	LastTransactionID string        `json:"lastTransactionID"`
+	Transactions      []Transaction `json:"transactions"`
 }
 
 // https://golang.org/pkg/time/#Time.AddDate
@@ -78,12 +61,12 @@ func (c *OandaConnection) GetTransactions(from time.Time, to time.Time) Transact
 	return data
 }
 
-func (c *OandaConnection) GetTransaction(ticket string) Transaction {
+func (c *OandaConnection) GetTransaction(ticket string) TransactionResponse {
 
 	endpoint := "/accounts/" + c.accountID + "/transactions/" + ticket
 
 	response := c.Request(endpoint)
-	data := Transaction{}
+	data := TransactionResponse{}
 	unmarshalJson(response, &data)
 	return data
 }
